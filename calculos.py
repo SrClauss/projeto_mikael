@@ -29,6 +29,19 @@ def calcula_dict(c41_vazao, c42_diametro, c45_comprimento, c49_hf):
         "hf_total": round(c46_desnivel + c47_hf_na_linha, 4)
     }
 
+def calcula_planta(largura_planta, largura_aspersor, vazao_litro, vazao_aspersor, comprimento, hf, diametro_entrada, diametro_saida):
+    qtd_aspersor = largura_planta/largura_aspersor
+    area = calcula_vazao_complementar(vazao_litro/1000,comprimento,hf,diametro_entrada,diametro_saida)*1000/vazao_aspersor/qtd_aspersor*largura_planta*comprimento
+   
+    return {
+        "qtd_aspersor": round(qtd_aspersor, 2), 
+        "tubo25": round(area, 2),
+        "tubo32": round(area *1.997, 2),
+        "tubo35": round(area *1.8, 2),
+        "tubo50": round(area *2.88, 2)
+    }
+
+'''
 def calcula_planta(largura_planta, largura_aspersor, vazao_litro, vazao_aspersor, comprimento):
     qtd_aspersor = largura_planta/largura_aspersor
     area = vazao_litro/vazao_aspersor/qtd_aspersor*largura_planta*comprimento
@@ -40,32 +53,37 @@ def calcula_planta(largura_planta, largura_aspersor, vazao_litro, vazao_aspersor
         "tubo35": round(area *1.8, 2)
     }
         
+'''
+        
 
 
 
-def calcula_vazao_complementar(c41_vazao, c45_comprimento, c49_hf):
-     
-    hf_total_22 = calcula_hf_total(c41_vazao, 22.0, c45_comprimento, c49_hf)
-    hf_total_29 = calcula_hf_total(c41_vazao, 29.0, c45_comprimento, c49_hf)
+def calcula_vazao_complementar(c41_vazao, c45_comprimento, c49_hf, diametro_entrada, diametro_saida):
+    hf_total_entrada = calcula_hf_total(c41_vazao, diametro_entrada, c45_comprimento, c49_hf)
+    hf_total_saida = calcula_hf_total(c41_vazao, diametro_saida, c45_comprimento, c49_hf)
+    
     print("valores iniciais")
-    print("hf22 = {0}, hf29 = {1}".format(hf_total_22, hf_total_29))
+    print("hf{0} = {1}, hf{2} = {3}".format(diametro_entrada, hf_total_entrada, diametro_saida, hf_total_saida))
     print("**************************************************************")
-    i = 0.0005
+    i = 0.005
     
 
-    if hf_total_22 > hf_total_29 *-1.0:
-        while hf_total_22 > hf_total_29 *-1.0:
+    if hf_total_entrada > hf_total_saida *-1.0:
+        while hf_total_entrada > hf_total_saida *-1.0:
             c41_vazao -= i
-            hf_total_22 = calcula_hf_total(c41_vazao, 22.0, c45_comprimento, c49_hf)
-            hf_total_29 = calcula_hf_total(c41_vazao, 29.0, c45_comprimento, c49_hf)
-            print("hf22 = {0}, hf29 = {1}".format(hf_total_22, hf_total_29))
-    if hf_total_22 < hf_total_29 *-1.0:
-        while hf_total_22 < hf_total_29 *-1.0:
+            hf_total_entrada = calcula_hf_total(c41_vazao, diametro_entrada, c45_comprimento, c49_hf)
+            hf_total_saida = calcula_hf_total(c41_vazao, diametro_saida, c45_comprimento, c49_hf)
+            print("hf{0} = {1}, hf{2} = {3}".format(diametro_entrada, hf_total_entrada, diametro_saida, hf_total_saida))
+    if hf_total_entrada < hf_total_saida *-1.0:
+        while hf_total_entrada < hf_total_saida *-1.0:
             c41_vazao += i
-            hf_total_22 = calcula_hf_total(c41_vazao, 22.0, c45_comprimento, c49_hf)
-            hf_total_29 = calcula_hf_total(c41_vazao, 29.0, c45_comprimento, c49_hf)
-            print("hf22 = {0}, hf29 = {1}".format(hf_total_22, hf_total_29))
+            hf_total_entrada = calcula_hf_total(c41_vazao, diametro_entrada, c45_comprimento, c49_hf)
+            hf_total_saida = calcula_hf_total(c41_vazao, diametro_saida, c45_comprimento, c49_hf)
+            print("hf{0} = {1}, hf{2} = {3}".format(diametro_entrada, hf_total_entrada, diametro_saida, hf_total_saida))
+
     return round(c41_vazao, 4)
+
+
 
 
 
