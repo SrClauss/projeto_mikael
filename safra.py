@@ -220,6 +220,7 @@ def calcula_ui_plantas():
     vazao_litros = float(entry_vazao_l.get())
     comprimento = float(entry_comprimento.get())
     hf = float(entry_hf.get())
+    area_setor=float(entry_area_setor.get())
     dict_planta = calcula_planta(
         largura_planta=largura_planta,
         largura_aspersor=largura_aspersor,
@@ -228,16 +229,17 @@ def calcula_ui_plantas():
          comprimento=comprimento,
         hf=hf,
         diametro_entrada=diametro_inicial.get(),
-        diametro_saida=22.0 if diametro_inicial.get() == 29.0 else 22.0
+        diametro_saida=22.0 if diametro_inicial.get() == 29.0 else 22.0,
+        area_setor=area_setor
 
     )
 
     preenche_entry_inativa(entry_quantidade_aspersor, dict_planta["qtd_aspersor"])
    
-    preenche_entry_inativa(entry_tubo_25, dict_planta["tubo25"])
-    preenche_entry_inativa(entry_tubo_32, dict_planta["tubo32"])
-    preenche_entry_inativa(entry_tubo_35, dict_planta["tubo35"])
-    preenche_entry_inativa(entry_tubo_50, dict_planta["tubo50"])
+    preenche_entry_inativa(entry_tubo_1, dict_planta["tubo1"])
+    preenche_entry_inativa(entry_tubo_2, dict_planta["tubo2"])
+    preenche_entry_inativa(entry_tubo_3, dict_planta["tubo3"])
+    preenche_entry_inativa(entry_tubo_4, dict_planta["tubo4"])
 
     update()
 
@@ -426,6 +428,9 @@ Label(frame_planta, text="Aspersores por planta: ").grid(row=3, column=0, padx=1
 entry_quantidade_aspersor = Entry(frame_planta, state="readonly", takefocus=False)
 entry_quantidade_aspersor.grid(row=3, column=1, padx=10, pady=10)
 
+Label(frame_planta, text="area_setor: ").grid(row=7, column=0, padx=10, pady=10, sticky="e")
+entry_area_setor = Entry(frame_planta, takefocus=False)
+entry_area_setor.grid(row=7, column=1, padx=10, pady=10)
 
 
 
@@ -439,23 +444,23 @@ frame_tubulacoes.grid(row=1, column=0, padx=0, pady=(10,10))
 
 label_tubo1 = Label(frame_tubulacoes, text="                   Tubo 25mm: ")
 label_tubo1.grid(row=0, column=0, padx=10, pady=10, sticky="e")
-entry_tubo_25 = Entry(frame_tubulacoes, state="readonly", takefocus=False)
-entry_tubo_25.grid(row=0, column=1, padx=10, pady=10, sticky="e")
+entry_tubo_1 = Entry(frame_tubulacoes, state="readonly", takefocus=False)
+entry_tubo_1.grid(row=0, column=1, padx=10, pady=10, sticky="e")
 
 label_tubo2 = Label(frame_tubulacoes, text="Tubo 32mm: ")
 label_tubo2.grid(row=1, column=0, padx=10, pady=10, sticky="e")
-entry_tubo_32 = Entry(frame_tubulacoes, state="readonly", takefocus=False)
-entry_tubo_32.grid(row=1, column=1, padx=10, pady=10, sticky="e")
+entry_tubo_2 = Entry(frame_tubulacoes, state="readonly", takefocus=False)
+entry_tubo_2.grid(row=1, column=1, padx=10, pady=10, sticky="e")
 
 label_tubo3 = Label(frame_tubulacoes, text="Tubo 35mm: ")
 label_tubo3.grid(row=2, column=0, padx=10, pady=10, sticky="e")
-entry_tubo_35 = Entry(frame_tubulacoes, state="readonly", takefocus=False)
-entry_tubo_35.grid(row=2, column=1, padx=10, pady=10, sticky="e")
+entry_tubo_3 = Entry(frame_tubulacoes, state="readonly", takefocus=False)
+entry_tubo_3.grid(row=2, column=1, padx=10, pady=10, sticky="e")
 
 label_tubo4 = Label(frame_tubulacoes, text="Tubo 50mm: ")
 label_tubo4.grid(row=3, column=0, padx=10, pady=10, sticky="e")
-entry_tubo_50 = Entry(frame_tubulacoes, state="readonly", takefocus=False)
-entry_tubo_50.grid(row=3, column=1, padx=10, pady=10, sticky="e")
+entry_tubo_4 = Entry(frame_tubulacoes, state="readonly", takefocus=False)
+entry_tubo_4.grid(row=3, column=1, padx=10, pady=10, sticky="e")
 
 
 
@@ -468,7 +473,7 @@ button_calcular_planta = Button(frame_pai, text="Calcular Planta", command=calcu
 button_calcular_planta.grid(row=3, column=1, columnspan=2, sticky="e")
 
 entries_variaveis = [entry_vazao, combo_diametro, entry_comprimento, entry_hf, 
-                     entry_largura_planta, entry_largura_aspersor, entry_vazao_aspersor]
+                     entry_largura_planta, entry_largura_aspersor, entry_vazao_aspersor, entry_area_setor]
 
 
 

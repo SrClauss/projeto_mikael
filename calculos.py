@@ -29,31 +29,25 @@ def calcula_dict(c41_vazao, c42_diametro, c45_comprimento, c49_hf):
         "hf_total": round(c46_desnivel + c47_hf_na_linha, 4)
     }
 
-def calcula_planta(largura_planta, largura_aspersor, vazao_litro, vazao_aspersor, comprimento, hf, diametro_entrada, diametro_saida):
+def calcula_planta(largura_planta, largura_aspersor, vazao_litro, vazao_aspersor, comprimento, hf, diametro_entrada, diametro_saida, area_setor):
     qtd_aspersor = largura_planta/largura_aspersor
     area = calcula_vazao_complementar(vazao_litro/1000,comprimento,hf,diametro_entrada,diametro_saida)*1000/vazao_aspersor/qtd_aspersor*largura_planta*comprimento
-   
+    tubo1 = area
+    area_setor = area_setor - tubo1 if area_setor - tubo1 > 0 else 0
+    tubo2 = area/1.997 if area_setor > area/1.997 else area_setor 
+    area_setor = area_setor - tubo2 if area_setor - tubo2 > 0 else 0
+    tubo3 = area/1.8 if area_setor > area/1.8  else area_setor
+    area_setor = area_setor - tubo3 if area_setor - tubo3 > 0 else 0
+    tubo4 = area/2.88 if area_setor > area/2.88  else area_setor
     return {
         "qtd_aspersor": round(qtd_aspersor, 2), 
-        "tubo25": round(area, 2),
-        "tubo32": round(area *1.997, 2),
-        "tubo35": round(area *1.8, 2),
-        "tubo50": round(area *2.88, 2)
+        "tubo1": round(tubo1, 2),
+        "tubo2": round(tubo2, 2),
+        "tubo3": round(tubo3, 2),
+        "tubo4": round(tubo4, 2)
     }
 
-'''
-def calcula_planta(largura_planta, largura_aspersor, vazao_litro, vazao_aspersor, comprimento):
-    qtd_aspersor = largura_planta/largura_aspersor
-    area = vazao_litro/vazao_aspersor/qtd_aspersor*largura_planta*comprimento
-    
-    return {
-        "qtd_aspersor": round(qtd_aspersor, 2), 
-        "tubo25": round(area, 2),
-        "tubo32": round(area *1.997, 2),
-        "tubo35": round(area *1.8, 2)
-    }
-        
-'''
+
         
 
 
@@ -82,14 +76,3 @@ def calcula_vazao_complementar(c41_vazao, c45_comprimento, c49_hf, diametro_entr
             print("hf{0} = {1}, hf{2} = {3}".format(diametro_entrada, hf_total_entrada, diametro_saida, hf_total_saida))
 
     return round(c41_vazao, 4)
-
-
-
-
-
-
-
-
-            
-               
-          
